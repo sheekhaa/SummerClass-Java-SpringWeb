@@ -57,5 +57,3 @@ public class SignUpController {
         return "login.html";
     }
 }
-
-

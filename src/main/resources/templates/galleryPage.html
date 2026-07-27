@@ -7,5 +7,11 @@
 <body>
 <div th:insert="navbar.html"></div>
 <h1>this is gallery Page</h1>
+<hr>
+Upload your image
+<form method="post" action="gallery" enctype="multipart/form-data">
+    <input type="file" name="image">
+    <input type="submit" value="UPLOAD IMAGE">
+</form>
 </body>
 </html>

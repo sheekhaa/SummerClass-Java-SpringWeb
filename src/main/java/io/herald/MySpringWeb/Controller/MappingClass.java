@@ -34,7 +34,6 @@ public class MappingClass {
     @GetMapping("/login")
     public String login(){
         return "login";
-
     }
 
     @PostMapping("/login")
@@ -71,5 +70,4 @@ public class MappingClass {
         //logout your session
         return "login";
     }
-
 }
