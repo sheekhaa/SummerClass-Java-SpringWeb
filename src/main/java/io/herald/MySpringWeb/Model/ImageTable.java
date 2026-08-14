@@ -10,7 +10,7 @@ public class ImageTable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Lob //large objects
-    @Column(columnDefinition = "MEDIUMLOB")
+    @Column(columnDefinition = "MEDIUMBLOB")
     private String image;
 
 }
