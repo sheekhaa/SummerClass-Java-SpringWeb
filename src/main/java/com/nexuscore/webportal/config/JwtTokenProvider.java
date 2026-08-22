@@ -11,6 +11,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -32,7 +33,9 @@ public class JwtTokenProvider {
      * @return The signing key.
      */
     private Key getSigningKey() {
-        byte[] keyBytes = secret.getBytes();
+        // Ensure the secret is provided; otherwise throw a clear exception
+        Objects.requireNonNull(secret, "jwt.secret property is not set");
+        byte[] keyBytes = secret.getBytes(java.nio.charset.StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 

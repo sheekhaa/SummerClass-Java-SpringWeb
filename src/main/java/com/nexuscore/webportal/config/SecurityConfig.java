@@ -43,19 +43,23 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // Disable CSRF protection (common in stateless REST APIs)
         http.csrf(csrf -> csrf.disable());
-        
+
+        // Make the API stateless – no HTTP session is created
+        http.sessionManagement(sess ->
+                sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
         // Configure authorization rules for endpoints
         http.authorizeHttpRequests(auth -> auth
-            // Allow public access to home, login, signup, and static resources
-            .requestMatchers("/", "/login", "/signup", "/css/**", "/js/**", "/images/**").permitAll()
-            // Allow public access to authentication REST APIs (e.g. login endpoint)
-            .requestMatchers("/api/auth/**").permitAll()
-            // Require authentication for all other /api/ endpoints
-            .requestMatchers("/api/**").authenticated()
-            // Allow everything else (e.g. Thymeleaf views) based on controller logic
-            .anyRequest().permitAll()
+                // Allow public access to home, login, signup, and static resources
+                .requestMatchers("/", "/login", "/signup", "/css/**", "/js/**", "/images/**").permitAll()
+                // Allow public access to authentication REST APIs (e.g. login endpoint)
+                .requestMatchers("/api/auth/**").permitAll()
+                // Require authentication for all other /api/ endpoints
+                .requestMatchers("/api/**").authenticated()
+                // Allow everything else (e.g. Thymeleaf views) based on controller logic
+                .anyRequest().permitAll()
         );
-            
+
         // Inject the custom JWT filter before the standard UsernamePasswordAuthenticationFilter
         // This ensures the token is validated before Spring attempts normal authentication
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
