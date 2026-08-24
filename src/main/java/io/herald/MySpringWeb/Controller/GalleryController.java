@@ -57,7 +57,6 @@ public class GalleryController {
             return "login";
         }
 
-        m.addAttribute("totalImages", imageRepo.findAll());
         return "galleryPage";
     }
 
@@ -68,7 +67,7 @@ public class GalleryController {
      * @return The gallery view after saving.
      */
     @PostMapping("/gallery")
-    public String galleryPost(@RequestParam("image") MultipartFile image, HttpSession session, Model m)
+    public String galleryPost(@RequestParam("image") MultipartFile image, HttpSession session)
     {
         try {
             byte[] imgBytes = image.getBytes();
@@ -90,7 +89,7 @@ public class GalleryController {
             e.printStackTrace();
         }
 
-        m.addAttribute("totalImages", imageRepo.findAll());
+        session.setAttribute("totalImages", imageRepo.findAll());
         return "galleryPage";
     }
 

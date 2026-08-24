@@ -19,7 +19,7 @@ Upload your image:
 <hr>
 <h4>Images from TIDB:</h4> <br><br>
 
-<span th:each="image:${totalImages}">
+<span th:each="image:${session.totalImages}">
     <img th:src="'data:image/jpeg;base64,'+${image.getImage()}"    style="width:40%" >
 </span>
 

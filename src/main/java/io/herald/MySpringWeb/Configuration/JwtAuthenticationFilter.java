@@ -4,13 +4,12 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,13 +21,8 @@ import java.util.ArrayList;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
-
-    private final JWUtil jwtUtil;
-
-    public JwtAuthenticationFilter(JWUtil jwtUtil) {
-        this.jwtUtil = jwtUtil;
-    }
+    @Autowired
+    private JWUtil jwtUtil;
 
     /**
      * Performs the actual filtering logic.
@@ -52,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 // Parse the token to extract the username
                 username = jwtUtil.extractUsername(jwt);
             } catch (Exception e) {
-                logger.debug("Ignoring invalid JWT: {}", e.getMessage());
+                System.out.println("JWT Parsing Error: " + e.getMessage());
             }
         }
 

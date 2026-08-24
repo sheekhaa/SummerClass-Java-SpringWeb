@@ -11,8 +11,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.CascadeType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 /**
@@ -39,18 +37,15 @@ public class UserTable {
     
     // Encrypted password hash (BCrypt)
     @NotBlank(message = "Password is required")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     // One user can have many locally stored images. 
     // CascadeType.ALL ensures that if a user is deleted, their images are also deleted.
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<ImageTable> images;
 
     // One user can have many Cloudinary stored images.
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<ImageTable2> cloudImages;
 
     // Explicit getters and setters are technically redundant due to @Data,
