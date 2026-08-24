@@ -1,9 +1,11 @@
 services:
   - type: web
-    name: web-portal-app
+    name: my-spring-web
     env: docker
     plan: free
     branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
     envVars:
       - key: DB_URL
         sync: false
