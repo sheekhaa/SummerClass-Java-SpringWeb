@@ -62,4 +62,16 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+    /**
+     * Defines a dummy UserDetailsService to prevent Spring Boot from automatically
+     * generating a default security password in the logs.
+     * Real authentication is handled manually via UserService and JwtAuthenticationFilter.
+     */
+    @Bean
+    public org.springframework.security.core.userdetails.UserDetailsService userDetailsService() {
+        return username -> {
+            throw new org.springframework.security.core.userdetails.UsernameNotFoundException("Not used");
+        };
+    }
 }
