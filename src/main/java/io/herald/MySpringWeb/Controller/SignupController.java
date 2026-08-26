@@ -20,7 +20,6 @@ public class SignupController {
 
     /**
      * Displays the signup HTML page.
-     * 
      * @return View name for signup.
      */
     @GetMapping("/signup")
@@ -31,13 +30,13 @@ public class SignupController {
     /**
      * Handles the POST submission from the signup form.
      * Creates a new UserTable entity and delegates to UserService for saving.
-     * 
      * @param request Provides access to form parameters.
-     * @param m       The Model to transport success attributes to the login view.
+     * @param m The Model to transport success attributes to the login view.
      * @return View name for login upon successful registration.
      */
     @PostMapping("/signup")
-    public String postSignup(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    public String postSignup(HttpServletRequest request, RedirectAttributes redirectAttributes)
+    {
         // Extract raw form parameters
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -60,13 +59,12 @@ public class SignupController {
         uc.setPassword(password); // Will be hashed securely within UserService implementation
         uc.setEmail(email);
 
-        // Save the new account. Its email is sent asynchronously, so signup can
-        // redirect promptly.
+        // Save the new account. Its email is sent asynchronously, so signup can redirect promptly.
         userService.registerUser(uc);
 
         // Store a one-time message that is displayed after the redirect to login.
         redirectAttributes.addFlashAttribute("signupSuccess", "Account created. Please sign in.");
-
+        
         return "redirect:/login";
     }
 
